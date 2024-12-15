@@ -192,8 +192,57 @@ public class SignUP extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String formno = first;
+        String name = textName.getText();
+        String fname = textFname.getText();
+        String dob = "";
+        if (dateChooser.getDate() != null) {
+            dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a valid Date of Birth.");
+            return;
+        }
 
+        String gender = null;
+        if (r1.isSelected()) {
+            gender = "Male";
+        } else if (r2.isSelected()) {
+            gender = "Female";
+        }
+
+        String email = textEmail.getText();
+        String marital = null;
+        if (m1.isSelected()) {
+            marital = "Married";
+        } else if (m2.isSelected()) {
+            marital = "Single";
+        } else if (m3.isSelected()) {
+            marital = "Other";
+        }
+
+        String address = textAdd.getText();
+        String city = textCity.getText();
+        String pincode = textPin.getText();
+        String state = textState.getText();
+
+        // Validate fields
+        if (!(!name.isEmpty() && !fname.isEmpty() && !dob.isEmpty() && gender != null && !email.isEmpty() && marital != null && !address.isEmpty() && !city.isEmpty() && !pincode.isEmpty() && !state.isEmpty())) {
+            JOptionPane.showMessageDialog(null, "All fields are required!");
+            return;
+        }
+
+        try {
+            Con con1 = new Con();
+            String q = "insert into signup values('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + email + "','" + marital + "','" + address + "','" + city + "','" + pincode + "','" + state + "')";
+            con1.statement.executeUpdate(q);
+            new Signup2(first); // Transition to next page
+            setVisible(false);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error saving data. Please try again.");
+            ex.printStackTrace();
+        }
     }
+
 
     public static void main(String[] args) {
         new SignUP();
