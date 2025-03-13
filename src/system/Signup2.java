@@ -11,7 +11,7 @@ public class Signup2 extends JFrame implements ActionListener {
     JRadioButton r1,r2,e1,e2;
     JButton next;
     String formno;
-    Signup2(String first){
+    Signup2(String formno){
         super("Application Form");
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/bank.png"));
@@ -146,12 +146,12 @@ public class Signup2 extends JFrame implements ActionListener {
         add(e2);
 
         JLabel l12 = new JLabel("Form No : ");
-        l12.setFont(new Font("Raleway", Font.BOLD, 18));
+        l12.setFont(new Font("Raleway", Font.BOLD, 14));
         l12.setBounds(700, 10, 100, 30);
         add(l12);
 
         JLabel l13 = new JLabel(formno);
-        l13.setFont(new Font("Raleway", Font.BOLD, 18));
+        l13.setFont(new Font("Raleway", Font.BOLD, 14));
         l13.setBounds(760, 10, 60, 30);
         add(l13);
 
@@ -173,6 +173,43 @@ public class Signup2 extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String rel = (String) comboBox1.getSelectedItem();
+        String cate = (String) comboBox2.getSelectedItem();
+        String inc = (String) comboBox3.getSelectedItem();
+        String edu = (String) comboBox4.getSelectedItem();
+        String occ = (String) comboBox5.getSelectedItem();
+
+        String pan = textPan.getText();
+        String addhar = textAadhar.getText();
+
+        String scitizen = " ";
+        if ((r1.isSelected())){
+            scitizen = "Yes";
+        } else if (r2.isSelected()) {
+            scitizen ="No";
+        }
+        String eAccount = " ";
+        if ((r1.isSelected())){
+            eAccount = "Yes";
+        } else if (r2.isSelected()) {
+            eAccount ="No";
+        }
+
+        try{
+            if (textPan.getText().equals("") || textAadhar.getText().equals("")){
+                JOptionPane.showMessageDialog(null,"Fill all the fields");
+            }else {
+                Con c1 = new Con();
+                String q = "insert into signuptwo values('"+formno+"', '"+rel+"', '"+cate+"','"+inc+"','"+edu+"','"+occ+"','"+pan+"','"+addhar+"','"+scitizen+"','"+eAccount+"')";
+                c1.statement.executeUpdate(q);
+                new Signup3(formno);
+                setVisible(false);
+            }
+
+
+        }catch (Exception E){
+            E.printStackTrace();
+        }
 
     }
 

@@ -235,7 +235,7 @@ public class SignUP extends JFrame implements ActionListener {
             Con con1 = new Con();
             String q = "insert into signup values('" + formno + "','" + name + "','" + fname + "','" + dob + "','" + gender + "','" + email + "','" + marital + "','" + address + "','" + city + "','" + pincode + "','" + state + "')";
             con1.statement.executeUpdate(q);
-            new Signup2(first); // Transition to next page
+            new Signup2(formno); // Transition to next page
             setVisible(false);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error saving data. Please try again.");
